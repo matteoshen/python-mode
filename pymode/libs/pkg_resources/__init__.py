@@ -2170,7 +2170,10 @@ def _handle_ns(packageName, path_item):
         return None
 
     if PY3:
-        loader = importer.find_spec(packageName)
+        if platform.system() == 'Linux':
+            loader = importer.find_module(packageName)
+        if platform.system() == 'Darwin':
+            loader = importer.find_spec(packageName)
     else:
         try:
             loader = importer.find_module(packageName)
